@@ -10,7 +10,7 @@
 
 **Step 1 — Form a team and pick a topic**
 
-Get into groups of 3-5. As a team, pick one of the following broad topics. It should be something with enough data for each person to create a chart from.
+Get into groups of 3-5 and pick a topic. It should be something with enough data for each person to create a chart from.
 
 ---
 
