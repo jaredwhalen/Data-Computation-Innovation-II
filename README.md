@@ -23,12 +23,12 @@ A making class in JavaScript-based visualization development. We work primarily 
 
 Weekly homework is due before the start of the next class. Assignments are graded on completion.
 
-| Week | Date | Topic | Assignment | Code references |
-|------|------|-------|------------|-----------------|
-| 1 | June 3 | Chart Fundamentals + SVG/Svelte Introduction | [Week 1](Assignments/Week%201%20-%20Assignments%20_%20Data,%20Computation%20&%20Innovation%20II.md) | [Code Reference](Files/Class%20Materials/Week%201%20%E2%80%94%20Chart%20Fundamentals%20+%20SVG_Svelte%20Introduction/Code%20Reference%20for%20Week%201%20%E2%80%94%20Chart%20Fundamentals%20+%20SVG_Svelte%20Introduction.pdf) |
-| 2 | June 10 | D3 Fundamentals, Part 1 | [Week 2](Assignments/Week%202%20-%20Assignments%20_%20Data,%20Computation%20&%20Innovation%20II.md) | [D3 Scales](Files/Class%20Materials/Week%202%20%E2%80%94%20D3%20Fundamentals,%20Part%201/D3%20Scales%20%E2%80%94%20Code%20Reference%20for%20Week%202.pdf), [D3 Generators](Files/Class%20Materials/Week%202%20%E2%80%94%20D3%20Fundamentals,%20Part%201/D3%20Generators%20%E2%80%94%20Code%20Reference%20for%20Week%202.pdf) |
-| 3 | June 17 | D3 Fundamentals, Part 2 | | |
-| 4 | June 24 | Interactivity and animation | | |
-| 5 | July 1 | GIS and Mapping | | |
-| 6 | July 8 | Scrollytelling + Advanced patterns | | |
-| 7 | July 15 | Final project presentations | | |
+| Week | Date | Topic | Assignment | Code references | Slides |
+|------|------|-------|------------|-----------------|--------|
+| 1 | June 3 | Chart Fundamentals + SVG/Svelte Introduction | [Week 1](Assignments/Week%201%20-%20Assignments%20_%20Data,%20Computation%20&%20Innovation%20II.md) | [Chart Fundamentals + SVG/Svelte Introduction](Files/Class%20Materials/Week%201%20%E2%80%94%20Chart%20Fundamentals%20+%20SVG_Svelte%20Introduction/Chart%20Fundamentals%20+%20SVG%3ASvelte%20Introduction.md) | [Week 1 slides](Files/Class%20Materials/Week%201%20%E2%80%94%20Chart%20Fundamentals%20+%20SVG_Svelte%20Introduction/Week%201%20slides.pdf) |
+| 2 | June 10 | D3 Fundamentals, Part 1 | [Week 2](Assignments/Week%202%20-%20Assignments%20_%20Data,%20Computation%20&%20Innovation%20II.md) | [D3 Scales](Files/Class%20Materials/Week%202%20%E2%80%94%20D3%20Fundamentals,%20Part%201/D3%20Scales.md), [Shape Generators, Declarative vs. Imperative, Axes](Files/Class%20Materials/Week%202%20%E2%80%94%20D3%20Fundamentals,%20Part%201/Shape%20Generators,%20Declarative%20vs.%20Imperative,%20Axes.md) | [Week 2 slides](Files/Class%20Materials/Week%202%20%E2%80%94%20D3%20Fundamentals,%20Part%201/Week%202%20slides.pdf) |
+| 3 | June 17 | D3 Fundamentals, Part 2 | | | |
+| 4 | June 24 | Interactivity and animation | | | |
+| 5 | July 1 | GIS and Mapping | | | |
+| 6 | July 8 | Scrollytelling + Advanced patterns | | | |
+| 7 | July 15 | Final project presentations | | | |
