@@ -1,8 +1,4 @@
----
-
-**Shape Generators, Declarative vs. Imperative, Axes** Code Reference
-
----
+# **Shape Generators, Declarative vs. Imperative, Axes** Code Reference
 
 ## **What is a shape generator?**
 

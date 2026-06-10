@@ -1,8 +1,4 @@
----
-
-**D3 Scales** Code Reference
-
----
+# **D3 Scales** Code Reference
 
 ## **Setup**
 

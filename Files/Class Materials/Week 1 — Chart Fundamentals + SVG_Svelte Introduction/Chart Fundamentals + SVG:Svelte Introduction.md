@@ -1,8 +1,4 @@
----
-
-**Chart Fundamentals \+ SVG/Svelte Introduction** Code Reference
-
----
+# **Chart Fundamentals + SVG/Svelte Introduction** Code Reference
 
 ## **The structure of a Svelte file**
 
