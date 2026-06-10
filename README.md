@@ -21,7 +21,7 @@ A making class in JavaScript-based visualization development. We work primarily 
 
 ## Weekly index
 
-Weekly homework is due before the start of the next class. Assignments are graded on completion.
+Weekly homework is due before the start of the next class.
 
 | Week | Date | Topic | Assignment | Code references | Slides |
 |------|------|-------|------------|-----------------|--------|
