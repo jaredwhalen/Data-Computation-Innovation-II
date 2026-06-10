@@ -2,6 +2,10 @@
 
 [**Official Svelte Tutorial:**](https://svelte.dev/tutorial/svelte/welcome-to-svelte) Complete the following modules: Events, Bindings, and Classes and styles
 
+### **Final project update**
+
+**Pitch:** One paragraph describing the story you want to tell, the data source you plan to use, and why it benefits from a visual treatment. This is intentionally preliminary to get you thinking about it, but do not feel locked in yet. Submit in Courseworks.
+
 ### **Deliverables**
 
 **Step 1 — Form a team and pick a topic**
