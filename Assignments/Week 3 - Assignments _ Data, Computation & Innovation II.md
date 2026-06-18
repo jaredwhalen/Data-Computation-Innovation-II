@@ -4,7 +4,7 @@
 
 ### **Final project update**
 
-**Data in hand:** Have your dataset acquired and at least partially cleaned. Prepare a rough sketch (on paper or in code) of the visual structure you're considering.
+**Data in hand:** Have your dataset acquired and at least partially cleaned. Prepare a rough sketch (on paper or in code) of the visual structure you're considering. This is not locking you in. But it should get you thinking more seriously about what story you can actually tell with the data that is available.
 
 
 ### **Deliverables**
