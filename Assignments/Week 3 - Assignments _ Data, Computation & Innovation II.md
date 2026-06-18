@@ -28,7 +28,7 @@ A few things to keep in mind:
 * Translate `.attr()` chains into inline SVG attributes.
 * Watch for the D3 version the notebook uses. If something isn't working, that's often why — check the code reference for the translation pattern.
 
-You don't need to match it pixel-for-pixel. The goal is a working chart that produces the same output from the same data.
+You don't need to match it pixel-for-pixel, but try to get it as close as possible. The goal is a working chart that produces the same output from the same data.
 
 ---
 
@@ -51,25 +51,10 @@ What to keep:
 
 **Submitting**
 
-Post both charts to the class channel before next class. For each one include:
+Post both charts to Courseworks before next class. For each one include:
 
+* A link to your GitHub repository
 * A screenshot of the original (D3 gallery or Observable)
 * A screenshot of your Svelte version
 * The link to the example you started from
 * One or two sentences on the biggest translation challenge you ran into
-
----
-
-**Where to look**
-
-A few good starting points for finding clean, well-written examples:
-
-* [Official D3 Gallery](https://observablehq.com/@d3/gallery?utm_source=d3js-org&utm_medium=hero&utm_campaign=try-observable) — the official D3 example collection on Observable. Well-maintained, good range of chart types. Start here.
-* [Mike Bostock's notebooks](https://observablehq.com/@mbostock) — the creator of D3. Code is clean but sometimes uses advanced patterns.
-* [Observable Plot examples](https://observablehq.com/@observablehq/plot-gallery) — note that Plot is a different library from D3. Avoid these for this assignment.
-
-You can also browse [Observable](https://observablehq.com) more broadly — just make sure the notebook uses D3 directly, not Plot.
-
-Pick charts that are more complex than what you've built so far — multiple marks, more than two channels, a chart type you haven't tried yet. But stay away from anything that's primarily about animation or interaction for now. A chart that's doing interesting things with data and encoding is the right target.
-
-If you can't find something you like, scatter plots, bar charts with multiple series, and area charts with multiple layers are all good candidates that appear frequently in the gallery and translate cleanly.
