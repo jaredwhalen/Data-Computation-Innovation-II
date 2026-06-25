@@ -323,3 +323,453 @@ By default Svelte reuses DOM nodes when a list changes. Adding a key forces Svel
 
 The `(d.label)` is the key. When an item leaves the array, Svelte runs its `out:` transition before removing the element from the DOM.
 
+---
+
+## **Putting it together**
+
+The sections above cover individual concepts. The examples below walk through two complete charts — a column chart and a line chart — from a static starter to a finished interactive version.
+
+**Column chart** — adds `$state` for selection and tooltips, event handlers on each bar, and a CSS opacity transition.
+
+**Line chart** — adds a metric toggle, `$derived` scales and generators, `bind:clientWidth` for responsive width, and CSS/Svelte transitions when the data view changes.
+
+---
+
+### **Column chart starter**
+
+```
+<script>
+  import * as d3 from 'd3'
+
+  const data = [
+    { city: "New York",  avg: 55 },
+    { city: "Miami",     avg: 77 },
+    { city: "Chicago",   avg: 50 },
+    { city: "Houston",   avg: 68 },
+    { city: "Seattle",   avg: 52 }
+  ]
+
+  const width = 500
+  const height = 320
+  const margin = { top: 20, right: 20, bottom: 40, left: 45 }
+
+  const xScale = d3.scaleBand()
+    .domain(data.map(d => d.city))
+    .range([margin.left, width - margin.right])
+    .padding(0.2)
+
+  const yScale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([height - margin.bottom, margin.top])
+
+  const colorScale = d3.scaleOrdinal()
+    .domain(data.map(d => d.city))
+    .range(d3.schemeTableau10)
+</script>
+
+<svg {width} {height}>
+  {#each yScale.ticks(5) as tick}
+    <line
+      x1={margin.left}
+      x2={width - margin.right}
+      y1={yScale(tick)}
+      y2={yScale(tick)}
+      stroke="#e5e5e5"
+    />
+    <text
+      x={margin.left - 8}
+      y={yScale(tick)}
+      text-anchor="end"
+      dominant-baseline="middle"
+    >{tick}°</text>
+  {/each}
+
+  <line
+    x1={margin.left}
+    x2={width - margin.right}
+    y1={height - margin.bottom}
+    y2={height - margin.bottom}
+    stroke="#999"
+  />
+
+  {#each data as d}
+    <rect
+      x={xScale(d.city)}
+      y={yScale(d.avg)}
+      width={xScale.bandwidth()}
+      height={height - margin.bottom - yScale(d.avg)}
+      fill={colorScale(d.city)}
+    />
+    <text
+      x={xScale(d.city) + xScale.bandwidth() / 2}
+      y={height - margin.bottom + 16}
+      text-anchor="middle"
+    >{d.city}</text>
+  {/each}
+</svg>
+
+<style>
+  text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: #555;
+  }
+</style>
+```
+
+---
+
+### **Column chart finished**
+
+Adds selection state, tooltips, and opacity transitions on hover and click.
+
+```
+<script>
+  import * as d3 from 'd3'
+
+  const data = [
+    { city: "New York", avg: 55 },
+    { city: "Miami", avg: 77 },
+    { city: "Chicago", avg: 50 },
+    { city: "Houston", avg: 68 },
+    { city: "Seattle", avg: 52 }
+  ]
+
+  const width = 500
+  const height = 320
+  const margin = { top: 20, right: 20, bottom: 40, left: 45 }
+
+  const xScale = d3.scaleBand()
+    .domain(data.map(d => d.city))
+    .range([margin.left, width - margin.right])
+    .padding(0.2)
+
+  const yScale = d3.scaleLinear()
+    .domain([0, 100])
+    .range([height - margin.bottom, margin.top])
+
+  const colorScale = d3.scaleOrdinal()
+    .domain(data.map(d => d.city))
+    .range(d3.schemeTableau10)
+
+  let selected = $state(null)
+  let tooltip = $state(null)
+</script>
+
+<svg {width} {height}>
+  {#each yScale.ticks(5) as tick}
+    <line
+      x1={margin.left}
+      x2={width - margin.right}
+      y1={yScale(tick)}
+      y2={yScale(tick)}
+      stroke="#e5e5e5"
+    />
+    <text
+      x={margin.left - 8}
+      y={yScale(tick)}
+      text-anchor="end"
+      dominant-baseline="middle"
+    >{tick}°</text>
+  {/each}
+
+  <line
+    x1={margin.left}
+    x2={width - margin.right}
+    y1={height - margin.bottom}
+    y2={height - margin.bottom}
+    stroke="#999"
+  />
+
+  {#each data as d}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <rect
+      x={xScale(d.city)}
+      y={yScale(d.avg)}
+      width={xScale.bandwidth()}
+      height={height - margin.bottom - yScale(d.avg)}
+      fill={colorScale(d.city)}
+      opacity={selected == null || selected == d.city ? 1 : 0.2}
+      onclick={() => selected = selected === d.city ? null : d.city}
+      onmouseenter={() => {
+        tooltip = {
+          x: xScale(d.city) + xScale.bandwidth() / 2,
+          y: yScale(d.avg) - 8,
+          text: `${d.city}: ${d.avg}`
+        }
+      }}
+      onmouseleave={() => tooltip = null}
+    />
+    <text
+      x={xScale(d.city) + xScale.bandwidth() / 2}
+      y={height - margin.bottom + 16}
+      text-anchor="middle"
+    >{d.city}</text>
+  {/each}
+
+  {#if tooltip}
+    <text
+      x={tooltip.x}
+      y={tooltip.y}
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="#222"
+    >{tooltip.text}</text>
+  {/if}
+</svg>
+
+<style>
+  text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: #555;
+  }
+
+  rect {
+    cursor: pointer;
+    transition: opacity 200ms ease;
+  }
+</style>
+```
+
+---
+
+### **Line chart starter**
+
+```
+<script>
+  import * as d3 from 'd3'
+
+  const data = [
+    { month: "Jan", temp: 34, precip: 3.2 },
+    { month: "Feb", temp: 37, precip: 2.8 },
+    { month: "Mar", temp: 46, precip: 4.0 },
+    { month: "Apr", temp: 57, precip: 3.7 },
+    { month: "May", temp: 67, precip: 3.5 },
+    { month: "Jun", temp: 76, precip: 3.4 },
+    { month: "Jul", temp: 82, precip: 4.3 },
+    { month: "Aug", temp: 80, precip: 3.8 },
+    { month: "Sep", temp: 72, precip: 3.2 },
+    { month: "Oct", temp: 61, precip: 2.7 },
+    { month: "Nov", temp: 50, precip: 3.1 },
+    { month: "Dec", temp: 39, precip: 3.6 }
+  ]
+
+  const width = 560
+  const height = 320
+  const margin = { top: 20, right: 20, bottom: 30, left: 45 }
+
+  const xScale = d3.scalePoint()
+    .domain(data.map(d => d.month))
+    .range([margin.left, width - margin.right])
+    .padding(0.5)
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.temp)])
+    .range([height - margin.bottom, margin.top])
+    .nice()
+
+  const lineGenerator = d3.line()
+    .x(d => xScale(d.month))
+    .y(d => yScale(d.temp))
+    .curve(d3.curveCatmullRom)
+</script>
+
+<svg {width} {height}>
+  {#each yScale.ticks(5) as tick}
+    <line
+      x1={margin.left}
+      x2={width - margin.right}
+      y1={yScale(tick)}
+      y2={yScale(tick)}
+      stroke="#e5e5e5"
+    />
+    <text
+      x={margin.left - 8}
+      y={yScale(tick)}
+      text-anchor="end"
+      dominant-baseline="middle"
+    >{tick}</text>
+  {/each}
+
+  {#each data as d}
+    <text
+      x={xScale(d.month)}
+      y={height - margin.bottom + 16}
+      text-anchor="middle"
+    >{d.month}</text>
+  {/each}
+
+  <line
+    x1={margin.left}
+    x2={margin.left}
+    y1={margin.top}
+    y2={height - margin.bottom}
+    stroke="#999"
+  />
+  <line
+    x1={margin.left}
+    x2={width - margin.right}
+    y1={height - margin.bottom}
+    y2={height - margin.bottom}
+    stroke="#999"
+  />
+
+  <path
+    d={lineGenerator(data)}
+    fill="none"
+    stroke="steelblue"
+    stroke-width="2.5"
+  />
+</svg>
+
+<style>
+  text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: #555;
+  }
+</style>
+```
+
+---
+
+### **Line chart finished**
+
+Adds a metric toggle, responsive width via `bind:clientWidth`, reactive scales, and transitions between states.
+
+```
+<script>
+  import * as d3 from 'd3'
+  import { fade } from 'svelte/transition'
+
+  const data = [
+    { month: "Jan", temp: 34, precip: 3.2 },
+    { month: "Feb", temp: 37, precip: 2.8 },
+    { month: "Mar", temp: 46, precip: 4.0 },
+    { month: "Apr", temp: 57, precip: 3.7 },
+    { month: "May", temp: 67, precip: 3.5 },
+    { month: "Jun", temp: 76, precip: 3.4 },
+    { month: "Jul", temp: 82, precip: 4.3 },
+    { month: "Aug", temp: 80, precip: 3.8 },
+    { month: "Sep", temp: 72, precip: 3.2 },
+    { month: "Oct", temp: 61, precip: 2.7 },
+    { month: "Nov", temp: 50, precip: 3.1 },
+    { month: "Dec", temp: 39, precip: 3.6 }
+  ]
+
+  const height = 320
+  const margin = { top: 20, right: 20, bottom: 30, left: 45 }
+
+  let metric = $state("temp")
+  let containerWidth = $state(0)
+
+  let xScale = $derived(
+    d3.scalePoint()
+      .domain(data.map(d => d.month))
+      .range([margin.left, containerWidth - margin.right])
+      .padding(0.5)
+  )
+
+  let yScale = $derived(
+    d3.scaleLinear()
+      .domain([0, d3.max(data, d => d[metric])])
+      .range([height - margin.bottom, margin.top])
+      .nice()
+  )
+
+  let lineGenerator = $derived(
+    d3.line()
+      .x(d => xScale(d.month))
+      .y(d => yScale(d[metric]))
+      .curve(d3.curveCatmullRom)
+  )
+</script>
+
+<div bind:clientWidth={containerWidth}>
+  <div class="controls">
+    <button onclick={() => metric = "temp"}>Temperature</button>
+    <button onclick={() => metric = "precip"}>Precipitation</button>
+  </div>
+
+  {#if containerWidth > 0}
+    <svg width={containerWidth} {height}>
+      {#each yScale.ticks(5) as tick (tick)}
+        <g
+          style="transform: translateY({yScale(tick)}px)"
+          transition:fade={{ duration: 150 }}
+        >
+          <line
+            x1={margin.left}
+            x2={containerWidth - margin.right}
+            y1="0"
+            y2="0"
+            stroke="#e5e5e5"
+          />
+          <text
+            x={margin.left - 8}
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle"
+          >{tick}</text>
+        </g>
+      {/each}
+
+      {#each data as d}
+        <text
+          x={xScale(d.month)}
+          y={height - margin.bottom + 16}
+          text-anchor="middle"
+        >{d.month}</text>
+      {/each}
+
+      <line
+        x1={margin.left}
+        x2={margin.left}
+        y1={margin.top}
+        y2={height - margin.bottom}
+        stroke="#999"
+      />
+      <line
+        x1={margin.left}
+        x2={containerWidth - margin.right}
+        y1={height - margin.bottom}
+        y2={height - margin.bottom}
+        stroke="#999"
+      />
+
+      <path
+        d={lineGenerator(data)}
+        fill="none"
+        stroke="steelblue"
+        stroke-width="2.5"
+      />
+    </svg>
+  {/if}
+</div>
+
+<style>
+  g {
+    transition: transform 300ms ease;
+  }
+
+  path {
+    transition: d 300ms ease;
+  }
+
+  text {
+    font-family: sans-serif;
+    font-size: 12px;
+    fill: #555;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+</style>
+```
+
