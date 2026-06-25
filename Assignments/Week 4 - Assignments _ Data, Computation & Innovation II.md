@@ -17,7 +17,7 @@ Build a fully developed D3 chart in your Svelte starter template that includes a
 * **Transitions** — use CSS and/or Svelte transitions when the chart moves between states
 * **Responsive layout** — resize the chart using `clientWidth` (or equivalent) so it adapts to the container
 
-Use your own data or a dataset related to your final project. The chart should be more polished than a static exercise — this is where interactivity, animation, and layout start to matter.
+Use a real dataset. The chart should be more polished than a static exercise — this is where interactivity, animation, and layout start to matter.
 
 ---
 
